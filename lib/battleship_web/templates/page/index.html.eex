@@ -1,0 +1,11 @@
+<div id="header">
+  <p>
+    Header
+  </p>
+</div>
+
+<div id="main">
+  <p>
+    Main
+  </p>
+</div>
