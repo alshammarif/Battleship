@@ -3,12 +3,14 @@ import socket from "./socket";
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Header from './components/header'
+import Header from './components/header';
 
-function renderHeader() {
-  let div = document.getElementById('header');
-  ReactDOM.render(<Header />, div);
-}
+ function renderHeader() {
+   let div = document.getElementById('header');
+   ReactDOM.render(<Header />, div);
+ }
+
+
 
 function start() {
   renderHeader();
