@@ -25,7 +25,7 @@ defmodule Battleship.Game.Board do
     :hits
   ]
 
-  def create(player_id) do
+  def create() do
     unplaced_ships = Enum.map(@ships_sizes, fn(size) ->
       {:ok, ship} = Ship.new(size)
       ship
@@ -49,7 +49,8 @@ defmodule Battleship.Game.Board do
     # }
   end
 
-  def add_ship(board, ship, x, y) do
+  def add_ship(board, size, x, y) do
+    ship = Enum.find(board["unplaced"], fn(s) -> s["size"] == size end)
     if ship != nil do
       index = Enum.find_index(board["unplaced"], fn(s) -> s["size"] == ship["size"] end)
       #check if not duplicate
@@ -106,9 +107,10 @@ defmodule Battleship.Game.Board do
     size + coord > @size - 1 or coord < 0 or coord > @size - 1
   end
 
-  def opponent_board(board) do
-    %{"ready" => board["ready"],
-    "board-grid" => view_board(board, false)
+  def opponent_board(board, pid) do
+    %{"opponent_id" => pid,
+      "ready" => board["ready"],
+      "board-grid" => view_board(board, false)
     }
   end
 
@@ -120,15 +122,15 @@ defmodule Battleship.Game.Board do
   end
 
   defp view_board(board, owner) do
-    grid = Enum.concat[0..@size - 1]
+    grid = Enum.concat([0..@size - 1])
     Enum.map(grid, fn(x) ->
       Enum.map(grid, fn(y) ->
         si = Enum.find_index(board["placed"], fn(s) -> Ship.location?(s, x, y) end)
         posn = Posn.new(x,y)
         cond do
-          si == nil and Mapset.member?(board["miss"], posn) ->
+          si == nil and MapSet.member?(board["miss"], posn) ->
             @miss
-          si != nil and Mapset.member?(board["hits"], posn) ->
+          si != nil and MapSet.member?(board["hits"], posn) ->
             @hit
           si != nil and owner ->
             @ship

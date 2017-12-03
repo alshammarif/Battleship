@@ -13,7 +13,7 @@ defmodule Battleship.Game.Player do
   def new(pid) do
     %{"kind" => "Player",
     "player_id" => pid,
-    "board" => Board.new,
+    "board" => Board.create,
     "turn" => false
     }
     # %Player {
@@ -25,5 +25,9 @@ defmodule Battleship.Game.Player do
 
   def turn(player) do
     %{ player | "turn" => true }
+  end
+
+  def turnFinish(player) do
+    %{player | "turn" => false}
   end
 end
