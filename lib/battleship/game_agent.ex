@@ -13,6 +13,10 @@ defmodule Battleship.GameAgent do
     GenServer.call(__MODULE__, {:create, game_id})
   end
 
+  def ongoing?(game_id) do
+    GenServer.call(__MODULE__, {:ongoing?, game_id})
+  end
+
   def add_player(game_id, player_id) do
     GenServer.call(__MODULE__, {:add_player, game_id, player_id})
   end
@@ -33,6 +37,10 @@ defmodule Battleship.GameAgent do
     game = Game.new(game_id)
     games = Map.put(games, game_id, game)
     {:reply, {:ok, game_id}, games}
+  end
+
+  def handle_call({:ongoing?, game_id}, _from, games) do
+    {:reply, Map.has_keyy?(games, game_id), games}
   end
 
   def handle_call({:add_player, game_id, player_id}, _from, games) do
