@@ -1,5 +1,5 @@
 # Battleship
-<<<<<<< HEAD
+
 
 To start your Phoenix server:
 
@@ -19,6 +19,5 @@ Ready to run in production? Please [check our deployment guides](http://www.phoe
   * Docs: https://hexdocs.pm/phoenix
   * Mailing list: http://groups.google.com/group/phoenix-talk
   * Source: https://github.com/phoenixframework/phoenix
-=======
+
 Battleship game using React and Phoenix
->>>>>>> 29b999b2d72a0942896f156964cded0118d1065d
