@@ -1,5 +1,7 @@
 # Battleship
 
+Some Code inspired by: https://github.com/bigardone/phoenix-battleship/tree/1077e13eb871ab4fd52eef09c1b42cabd44f4d8f
+No code was taken directly from source but was looked at as a model. 
 
 To start your Phoenix server:
 
