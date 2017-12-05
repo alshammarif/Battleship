@@ -7,8 +7,16 @@ defmodule Battleship.Game do
   # players in game, new table, challenges, player, winner, boards
 
   # defstruct ["id", "player1", "player2"]
+  @chars "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789" |> String.split("", trim: true)
 
-  def new(id) do
+  def string_of_length(length) do
+    Enum.reduce((1..length), [], fn (_i, acc) ->
+      [Enum.random(@chars) | acc]
+    end) |> Enum.join("")
+  end
+
+  def new() do
+    id = string_of_length(5)
     %{"kind" => "Game", "game_id" => id, "player1" => nil, "player2" => nil}
   end
 

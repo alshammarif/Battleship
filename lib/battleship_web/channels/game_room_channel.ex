@@ -6,7 +6,7 @@ defmodule BattleshipWeb.GameRoomChannel do
 
   def join("game:" <> game_id, payload, socket) do
     if !GameAgent.ongoing?(game_id) do
-      {:ok, game_id} = GameAgent.create(game_id)
+      {:ok, game_id} = GameAgent.create()
     end
 
     player_id = socket.assigns[:player_id]
@@ -16,7 +16,7 @@ defmodule BattleshipWeb.GameRoomChannel do
         socket= assign(socket, :game_id, game_id)
         oid = game["opponent"]["player_id"]
         if oid do
-          {:ok, updates} = GameAgent.get_player_game(gid, oid)
+          {:ok, updates} = GameAgent.get_player_game(game_id, oid)
           Battleship.Endpoint.broadcast!("#{game_id}' game has been updated successfully: player added")
         end
         {:ok, game, socket}
@@ -35,7 +35,7 @@ defmodule BattleshipWeb.GameRoomChannel do
         oid = game["opponent"]["player_id"]
         if oid do
           {:ok, updates} = GameAgent.get_player_game(gid, oid)
-          Battleship.Endpoint.broadcast!("#{game_id}' game has been updated successfully: ship placed")
+          Battleship.Endpoint.broadcast!("#{gid}' game has been updated successfully: ship placed")
         end
         {:reply, {:ok, game}, socket}
       {:error, reason} ->
@@ -53,7 +53,7 @@ defmodule BattleshipWeb.GameRoomChannel do
         oid = game["opponent"]["player_id"]
         if oid do
           {:ok, updates} = GameAgent.get_player_game(gid, oid)
-          Battleship.Endpoint.broadcast!("#{game_id}' game has been updated successfully: guess made")
+          Battleship.Endpoint.broadcast!("#{gid}' game has been updated successfully: guess made")
         end
         {:reply, {:ok, game}, socket}
       {:error, reason} ->
